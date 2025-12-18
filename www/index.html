@@ -199,7 +199,7 @@ function createPostElement(post) {
             </div>
             <div class="post-footer">
                 <span class="post-time">
-                    ${timeAgo(post.timestamp)}
+                    ${timeAgo(post.timestamp)}（${formatTimestamp(post.timestamp)}）
                 </span>
                 ${post.updatedAt ? `
                     <span class="post-updated">
