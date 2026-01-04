@@ -507,3 +507,139 @@ textarea.form-control {
 .logged-out {
     display: none;
 }
+
+/* =========================
+   ダークモード
+   ========================= */
+
+body.dark-mode {
+    background-color: #121212!important;
+    color: #e0e0e0!important;
+}
+
+/* コンテナ */
+body.dark-mode .container {
+    background-color: transparent;
+}
+
+/* 見出し */
+body.dark-mode h1,
+body.dark-mode h2 {
+    color: #e0e0e0;
+}
+
+/* 共通カード系 */
+body.dark-mode .post,
+body.dark-mode .post-form,
+body.dark-mode .auth-container,
+body.dark-mode .user-info,
+body.dark-mode .modal-content {
+    background-color: #1e1e1e!important;
+    box-shadow: none;
+    border: 1px solid #333;
+}
+
+/* 入力系 */
+body.dark-mode .form-control,
+body.dark-mode textarea,
+body.dark-mode input,
+body.dark-mode select {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+}
+
+body.dark-mode .form-control:focus {
+    border-color: #90caf9;
+    box-shadow: 0 0 0 0.2rem rgba(144, 202, 249, 0.25);
+}
+
+/* ラベル・補助テキスト */
+body.dark-mode label,
+body.dark-mode .help-text,
+body.dark-mode .character-count {
+    color: #b0b0b0;
+}
+
+/* 投稿本文 */
+body.dark-mode .post-content {
+    color: #e0e0e0;
+}
+
+/* 投稿ヘッダー */
+body.dark-mode .post-header {
+    border-bottom: 1px solid #333;
+}
+
+/* 投稿者名 */
+body.dark-mode .post-author {
+    color: #ffffff;
+}
+
+/* 時刻表示 */
+body.dark-mode .post-time,
+body.dark-mode .post-updated {
+    color: #aaaaaa;
+}
+
+/* メッセージ */
+body.dark-mode .message.success {
+    background-color: #1b3a24;
+    color: #a8e6b1;
+    border-color: #2e7d32;
+}
+
+body.dark-mode .message.error {
+    background-color: #3a1b1b;
+    color: #f5b5b5;
+    border-color: #a94442;
+}
+
+/* ボタン */
+body.dark-mode .btn-primary {
+    background-color: #3b82f6;
+}
+
+body.dark-mode .btn-primary:hover {
+    background-color: #2563eb;
+}
+
+body.dark-mode .btn-secondary {
+    background-color: #555;
+}
+
+body.dark-mode .btn-secondary:hover {
+    background-color: #666;
+}
+
+body.dark-mode .btn-danger {
+    background-color: #b91c1c;
+}
+
+body.dark-mode .btn-danger:hover {
+    background-color: #991b1b;
+}
+
+/* モーダル */
+body.dark-mode .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+body.dark-mode .modal-header {
+    border-bottom: 1px solid #333;
+}
+
+body.dark-mode .modal-footer {
+    border-top: 1px solid #333;
+}
+
+/* ローディング */
+body.dark-mode .loading-spinner {
+    color: #cccccc;
+}
+
+body.dark-mode .spinner {
+    border-color: #333;
+    border-top-color: #3b82f6;
+}
+

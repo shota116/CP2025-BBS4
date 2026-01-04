@@ -528,6 +528,23 @@ $(function() {
 
     // 投稿一覧の初期読み込み
     loadPosts();
+    $('#toggleDarkMode').on('click', function () {
+    $('body').toggleClass('dark-mode');
+
+    if ($('body').hasClass('dark-mode')) {
+        localStorage.setItem('theme', 'dark');
+        $(this).text('ライトモード');
+    } else {
+        localStorage.setItem('theme', 'light');
+        $(this).text('ダークモード');
+    }
+    });
+    // 起動時に復元
+    if (localStorage.getItem('theme') === 'dark') {
+        $('body').addClass('dark-mode');
+        $('#toggleDarkMode').text('ライトモード');
+    }
+
 });
 
 // クリーンアップ処理
@@ -568,6 +585,7 @@ window.addEventListener('unload', () => {
         <!-- ログイン情報（ログイン時表示） -->
         <div class="user-info logged-in">
             <span>ログイン中：<span id="userEmail"></span></span>
+            <button id="toggleDarkMode" class="btn-secondary">ダークモード</button>
             <button id="logoutButton" class="btn-secondary">ログアウト</button>
         </div>
 
