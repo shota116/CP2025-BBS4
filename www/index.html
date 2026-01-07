@@ -23,6 +23,9 @@ let postsListener = null;
 let currentEditId = null;
 // ログイン中のユーザ
 let currentUser = null;
+//ニックネーム
+let currentNickname = null;
+
 
 // メッセージ表示処理
 function showMessage(message, type = 'success') {
@@ -113,7 +116,7 @@ function createPost(author, content) {
 
     // author はログインしているユーザのメールアドレスに変更、userId を追加
     const postData = {
-        author: currentUser.email,
+        author: currentNickname,
         content: content,
         timestamp: firebase.database.ServerValue.TIMESTAMP,
         userId: currentUser.uid
@@ -479,6 +482,27 @@ function updateUI(user) {
         $('#userEmail').text('');
     }
 }
+function saveNickname() {
+    const nickname = $('#nicknameInput').val();
+
+    if (!nickname || !nickname.trim()) {
+        showMessage('ニックネームを入力してください', 'error');
+        return;
+    }
+
+    firebase.database().ref('users/' + currentUser.uid).update({
+        nickname: nickname
+    })
+    .then(() => {
+        currentNickname = nickname;
+        showMessage('ニックネームを保存しました');
+        closeModal('nicknameModal');
+    })
+    .catch(() => {
+        showMessage('保存に失敗しました', 'error');
+    });
+}
+
 
 $(function() {
     // Firebaseの初期化
@@ -493,10 +517,23 @@ $(function() {
 
     // 認証状態の監視
     firebase.auth().onAuthStateChanged((user) => {
-        currentUser = user;
-        updateUI(user);
+    currentUser = user;
+    updateUI(user);
+
+    if (!user) return;
+
+    firebase.database().ref('users/' + user.uid).once('value')
+    .then(snapshot => {
+        if (snapshot.exists() && snapshot.val().nickname) {
+            currentNickname = snapshot.val().nickname;
+        } else {
+            // 未設定ならモーダル表示
+            showModal('nicknameModal');
+        }
         loadPosts();
-     });
+    });
+});
+
 
     // 文字数カウンターの初期化
     updateCharacterCount('contentInput', 'contentCount', 1000);
@@ -557,6 +594,27 @@ window.addEventListener('unload', () => {
     </script>
 </head>
 <body>
+    <!-- ニックネーム設定モーダル -->
+    <div id="nicknameModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>ニックネーム設定</h3>
+                <button class="modal-close" onclick="closeModal('nicknameModal')">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>ニックネーム</label>
+                        <input type="text" id="nicknameInput"
+                        class="form-control" placeholder="表示名を入力">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" onclick="saveNickname()">保存</button>
+                </div>
+            </div>
+    </div>
+
     <div class="container">
         <h1>掲示板アプリ</h1>
 
@@ -587,6 +645,10 @@ window.addEventListener('unload', () => {
             <span>ログイン中：<span id="userEmail"></span></span>
             <button id="toggleDarkMode" class="btn-secondary">ダークモード</button>
             <button id="logoutButton" class="btn-secondary">ログアウト</button>
+            <button class="btn-secondary" onclick="showModal('nicknameModal')">
+                ニックネーム変更
+            </button>
+
         </div>
 
         <!-- 投稿フォーム（ログイン時表示） -->
